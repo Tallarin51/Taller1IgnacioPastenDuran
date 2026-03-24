@@ -115,7 +115,7 @@ public class Main {
 				mostrarMasRealizada(listaActividades);
 				break;
 			case "2":
-				masRealizadaPorUsuario(listaActividades, listaUser);
+				masRealizadaPorUsuario(listaActividades, listaUser, cantHoras);
 				break;
 			case "3":
 				masProcrastinacion(listaUser, cantHoras);
@@ -171,23 +171,152 @@ public class Main {
 		
 	}
 		
-	private static void todasActividades(String[] listaActividades) {
-		// TODO Auto-generated method stub
+	private static void masRealizadaPorUsuario(String[] actividades, String[] usuarios,int[] cantHoras) {
+		
+		for (int i = 0; i < usuarios.length; i++) {
+			
+			if (usuarios[i] == null) {
+				continue;
+			}
+			
+			boolean yaVisto = false;
+			for (int x = 0; x < i; x++) {
+				if (usuarios[x] != null && usuarios[x].equals(usuarios[i])) {
+					yaVisto = true;
+					break;
+				}
+			}
+			
+			if (yaVisto) {
+				continue;
+			}
+			
+			String usuario = usuarios[i];
+			String masRepetida = " ";
+			int mayorHoras = 0;
+			
+			for (int j = 0; j < actividades.length; j++ ) {
+				
+				if (usuarios[j] == null || actividades[j] == null ) {
+					continue;
+				}
+				
+				if (usuarios[j].equals(usuario)) {
+					
+					int sumaHoras = 0;
+					
+
+					for (int k = 0; k < actividades.length; k++) {
+						
+						if (usuarios[k] == null || actividades[k] == null) {
+							continue;
+						}
+						
+						if (usuarios[k].equals(usuario) && actividades[k].equals(actividades[j])) {
+							
+							sumaHoras += cantHoras[k];
+						}
+						
+						if (sumaHoras > mayorHoras) {
+							mayorHoras = sumaHoras;
+							masRepetida = actividades[j];
+					}
+					
+					}
+					
+				}
+				
+			}
+			
+			 System.out.println("* " + usuario + " -> " + masRepetida + 
+		                " -> con " + mayorHoras + " horas registradas");
+		}
+		
+		
+
 		
 	}
-
-	private static void masRealizadaPorUsuario(String[] actividades, String[] usuarios) {
-		// TODO Auto-generated method stub
-		
-	}
-	private static void masProcrastinacion(String[] listaUser, int[] cantHoras) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
 	
+	private static void masProcrastinacion(String[] usuarios, int[] cantHoras) {
+		
+		String usuarioMayor = " ";
+		int mayorHoras = 0;
+		
+		for (int i = 0; i < usuarios.length; i++) {
+			
+			if (usuarios[i] == null) {
+				continue;
+			}
+			
+			boolean yaVisto = false;
+			for (int x = 0; x < i; x++) {
+				if (usuarios[x] != null && usuarios[x].equals(usuarios[i])) {
+					yaVisto = true;
+					break;
+				}
+			}
+			
+			if (yaVisto) {
+				continue;
+			}
+			
+			String usuario = usuarios[i];
+			int sumaHoras = 0;
+			
+			for (int j = 0; j < usuarios.length; j++) {
+				
+				if (usuarios[j] == null) {
+					continue;
+				}
+				
+				if (usuarios[j].equals(usuario)) {
+					
+					sumaHoras += cantHoras[j];
+				}
+			}
+			
+			if (sumaHoras > mayorHoras) {
+				mayorHoras = sumaHoras;
+				usuarioMayor = usuario;
+			}
+		}
+		
+		System.out.println("El usuario con mayor procrastinacion es: " 
+	            + usuarioMayor + " con " + mayorHoras + " horas");
+		
+	}
+	
+	private static void todasActividades(String[] listaActividades) {
 
+	System.out.println("Lista de actividades: ");
+	
+	for (int i = 0; i < listaActividades.length; i ++) {
+		
+		if (listaActividades[i] == null) {
+			continue;
+		}
+		
+		boolean yaMostrada = false;
+		
+		for (int j = 0; j < i; j++) {
+			
+			if (listaActividades[j] != null && listaActividades[j].equals(listaActividades[i])) {
+				
+				yaMostrada = true;
+				break;
+			}
+			}
+			
+		if (!yaMostrada) {
+			System.out.println("-" + listaActividades[i]);
+		}
+		
+		}
+		
+		
+	}
+		
+	
 	private static void mostrarMenuUsuarios() {
 		// TODO Auto-generated method stub
 		
