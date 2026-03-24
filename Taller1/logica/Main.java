@@ -52,15 +52,16 @@ public class Main {
 			listaFechas[i] = fecha;
 			cantHoras[i] = horas;
 			listaActividades[i] = actividad;
+			i++;
 		 }
 				 
 		sc.close();
 		
-		mostrarMenu();
+		mostrarMenu(listaActividades, listaUser, cantHoras);
 		
 	}
 	
-	public static void  mostrarMenu() {
+	public static void  mostrarMenu(String[] listaActividades, String[] listaUser, int[] cantHoras) {
 		String opcion;
 		Scanner s = new Scanner(System.in);
 		do {
@@ -75,7 +76,7 @@ public class Main {
 					break;
 				
 				case "2":
-					mostrarMenuAnalisis();
+					mostrarMenuAnalisis(listaActividades, listaUser, cantHoras);
 					break;
 				case"3":
 					System.out.println("Saliendo... ");
@@ -91,10 +92,101 @@ public class Main {
 		
 	}
 
-	private static void mostrarMenuAnalisis() {
+	private static void mostrarMenuAnalisis(String[] listaActividades, String[] listaUser, int[] cantHoras) {
+		String opcion;
+		Scanner s = new Scanner(System.in);
+		
+		do {
+			
+			System.out.println("Bienvenido al menu de analisis!\r\n"
+					+ "\r\n"
+					+ "Que deseas realizar?\r\n"
+					+ "\r\n"
+					+ "1) Actividad más realizada\r\n"
+					+ "2) Actividad más realizada por cada usuario\r\n"
+					+ "3) Usuario con mayor procastinacion\r\n"
+					+ "4) Ver todas las actividades\r\n"
+					+ "5) Salir");
+			
+			opcion = s.nextLine();
+			switch (opcion) {
+			
+			case "1":
+				mostrarMasRealizada(listaActividades);
+				break;
+			case "2":
+				masRealizadaPorUsuario(listaActividades, listaUser);
+				break;
+			case "3":
+				masProcrastinacion(listaUser, cantHoras);
+				break;
+			case "4":
+				todasActividades(listaActividades);
+				break;
+			case "5":
+				System.out.println("Saliendo...");
+				break;
+			default:
+				System.out.println("Ingrese opción válida");
+				break;
+			}	
+		} while (!opcion.equals("5"));
+		
+	}
+
+	private static void mostrarMasRealizada(String[] actividades) {
+		
+		String masRepetida = " ";
+		int mayorCant = 0;
+		
+		for (int i = 0; i < actividades.length; i++) {
+			
+			if (actividades[i] == null) {
+				continue;
+			}
+			
+			int contador = 0;
+			
+			for(int j = 0; j < actividades.length; j++) {
+			
+				if (actividades[j] == null) {
+					continue;
+				}
+				
+				if (actividades[i].equals(actividades[j])) {
+					contador++;
+				}
+				
+				if (contador > mayorCant) {
+					
+					mayorCant = contador;
+					masRepetida = actividades[i];
+				}
+				
+			}
+		}
+		
+		System.out.println("La actividad más realizada fue: " + masRepetida + 
+				" un total de " + mayorCant + " veces");
+		
+	}
+		
+	private static void todasActividades(String[] listaActividades) {
 		// TODO Auto-generated method stub
 		
 	}
+
+	private static void masRealizadaPorUsuario(String[] actividades, String[] usuarios) {
+		// TODO Auto-generated method stub
+		
+	}
+	private static void masProcrastinacion(String[] listaUser, int[] cantHoras) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	
 
 	private static void mostrarMenuUsuarios() {
 		// TODO Auto-generated method stub
