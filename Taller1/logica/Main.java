@@ -57,11 +57,11 @@ public class Main {
 				 
 		sc.close();
 		
-		mostrarMenu(listaActividades, listaUser, cantHoras);
+		mostrarMenu(listaActividades, listaUser, listaFechas, cantHoras, listaNombre, contraseñas);
 		
 	}
 	
-	public static void  mostrarMenu(String[] listaActividades, String[] listaUser, int[] cantHoras) {
+	public static void  mostrarMenu(String[] listaActividades, String[] listaUser, String[] listaFechas, int[] cantHoras,String[] listaNombre, String[] contraseñas) {
 		String opcion;
 		Scanner s = new Scanner(System.in);
 		do {
@@ -72,11 +72,11 @@ public class Main {
 			switch (opcion) {
 			
 				case "1":
-					mostrarMenuUsuarios();
+					mostrarMenuUsuarios(listaUser, listaNombre, contraseñas, listaActividades, listaFechas, cantHoras);
 					break;
 				
 				case "2":
-					mostrarMenuAnalisis(listaActividades, listaUser, cantHoras);
+					mostrarMenuAnalisis(listaActividades, listaUser, listaFechas, cantHoras);
 					break;
 				case"3":
 					System.out.println("Saliendo... ");
@@ -92,7 +92,7 @@ public class Main {
 		
 	}
 
-	private static void mostrarMenuAnalisis(String[] listaActividades, String[] listaUser, int[] cantHoras) {
+	private static void mostrarMenuAnalisis(String[] listaActividades, String[] listaUser, String[] listaFechas, int[] cantHoras) {
 		String opcion;
 		Scanner s = new Scanner(System.in);
 		
@@ -121,7 +121,7 @@ public class Main {
 				masProcrastinacion(listaUser, cantHoras);
 				break;
 			case "4":
-				todasActividades(listaActividades);
+				todasActividades(listaActividades, listaFechas, listaUser, cantHoras);
 				break;
 			case "5":
 				System.out.println("Saliendo...");
@@ -286,7 +286,7 @@ public class Main {
 		
 	}
 	
-	private static void todasActividades(String[] listaActividades) {
+	private static void todasActividades(String[] listaActividades, String[] listaUser, String[] listaFechas, int[] cantHoras) {
 
 	System.out.println("Lista de actividades: ");
 	
@@ -296,30 +296,104 @@ public class Main {
 			continue;
 		}
 		
-		boolean yaMostrada = false;
+		System.out.println(listaUser[i] + " -> " +
+                listaFechas[i] + " -> " +
+                cantHoras[i] + " hrs -> " +
+                listaActividades[i]);
+			
 		
-		for (int j = 0; j < i; j++) {
-			
-			if (listaActividades[j] != null && listaActividades[j].equals(listaActividades[i])) {
-				
-				yaMostrada = true;
-				break;
-			}
-			}
-			
-		if (!yaMostrada) {
-			System.out.println("-" + listaActividades[i]);
-		}
 		
 		}
-		
-		
 	}
 		
 	
-	private static void mostrarMenuUsuarios() {
+	private static void mostrarMenuUsuarios(String[] listaUser, String[] listaNombre, String[] contraseñas,
+                                        String[] listaActividades, String[] listaFechas, int[] cantHoras) {
+		Scanner s = new Scanner(System.in);
+		System.out.println("Usuario: ");
+		String user = s.nextLine();
+		
+		System.out.println("Contraseña: ");
+		String pass = s.nextLine();
+		
+		boolean acceso = false;
+		
+		for(int i = 0; i < listaNombre.length; i++) {
+			if (listaNombre[i].equals(user) && contraseñas[i].equals(pass)) {
+				acceso = true;
+				break;
+			}
+		}
+		
+		if (acceso) {
+			System.out.println("Acceso correcto!");
+			System.out.println();
+			System.out.println("Bienvenido " + user + "!");
+		
+			String opcion;
+			
+			do {
+			
+				System.out.println("Que deseas realizar?\r\n"
+						+ "\r\n"
+						+ "1) Registrar actividad.\r\n"
+						+ "2) Modificar actividad.\r\n"
+						+ "3) Eliminar actividad.\r\n"
+						+ "4) Cambiar contraseña.\r\n"
+						+ "5) Salir.");
+			
+				opcion = s.nextLine();
+				switch (opcion) {
+			
+				case "1":
+					try{
+						registrarActividad(user, listaUser, listaFechas, cantHoras, listaActividades);
+					} catch (IOException e) {
+						System.out.println("Error al guardar");
+					}
+					break;
+				case "2":
+					modificarActividad();
+					break;
+				case "3":
+					eliminarActividad();
+					break;
+				case "4":
+					cambiarContraseña();
+					break;
+				case "5":
+					System.out.println("Saliendo...");
+					break;
+				default:
+					System.out.println("Ingrese opción válida");
+					break;
+				}	
+			} while (!opcion.equals("5"));
+		} else {
+			System.out.println("Usuario o contraseña incorrectos.");
+		}
+	}
+
+	private static void registrarActividad(String user, String[] listaUser, String[] listaFechas, int[] cantHoras, String[] listaActividades) throws IOException {
+		
+		
+		
+		
+	}
+	private static void modificarActividad() {
 		// TODO Auto-generated method stub
 		
 	}
+	private static void eliminarActividad() {
+		// TODO Auto-generated method stub
+		
+	}
+	private static void cambiarContraseña() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
 	
 }
