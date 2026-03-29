@@ -626,7 +626,4 @@ public class Main {
 		System.out.println("Contraseña cambiada correctamente");
 		
 	}
-
-
-	
 }
