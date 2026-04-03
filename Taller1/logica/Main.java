@@ -116,7 +116,7 @@ public class Main {
 			switch (opcion) {
 			
 			case "1":
-				mostrarMasRealizada(listaActividades);
+				mostrarMasRealizada(listaActividades, cantHoras);
 				break;
 			case "2":
 				masRealizadaPorUsuario(listaActividades, listaUser, cantHoras);
@@ -138,12 +138,12 @@ public class Main {
 		
 	}
 
-	private static void mostrarMasRealizada(String[] actividades) {
+	private static void mostrarMasRealizada(String[] actividades, int[] cantHoras) {
 		
 		//Muestra la actividad que mas se realizo y cuantas veces se realizo
 		
 		String masRepetida = " ";
-		int mayorCant = 0;
+		int maxHoras = 0;
 		
 		for (int i = 0; i < actividades.length; i++) {
 			
@@ -151,7 +151,8 @@ public class Main {
 				continue;
 			}
 			
-			int contador = 0;
+			String actividadActual = actividades[i];
+			int suma = 0;
 			
 			for(int j = 0; j < actividades.length; j++) {
 			
@@ -160,20 +161,20 @@ public class Main {
 				}
 				
 				if (actividades[i].equals(actividades[j])) {
-					contador++;
+					suma+=cantHoras[j];
 				}
 				
-				if (contador > mayorCant) {
+			}
+				if (suma > maxHoras) {
 					
-					mayorCant = contador;
-					masRepetida = actividades[i];
-				}
+					maxHoras = suma;
+					masRepetida = actividadActual;
 				
 			}
 		}
 		
 		System.out.println("La actividad más realizada fue: " + masRepetida + 
-				" un total de " + mayorCant + " veces");
+				" un total de " + maxHoras + " horas");
 		
 	}
 		
